@@ -1,0 +1,18 @@
+.history {
+  width: 80vw;
+}
+.tableRow {
+  border: 1px solid rgb(202, 194, 194);
+  height: 70px;
+  font-size: 16px;
+  color: dimgray;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.tableHeading {
+  composes: tableRow;
+  color: rgb(26, 25, 25);
+  background-color: #ebeef3;
+  text-transform: uppercase;
+}

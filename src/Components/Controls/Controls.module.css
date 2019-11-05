@@ -1,0 +1,23 @@
+.controls {
+  width: 80vw;
+  background-color: rgb(6, 43, 85);
+  padding: 50px 0 50px;
+  display: flex;
+  justify-content: space-around;
+}
+.input {
+  border: 0;
+  border-radius: 10px;
+  width: 240px;
+  height: 40px;
+}
+.button {
+  border: 0;
+  border-radius: 10px;
+  width: 188px;
+  height: 40px;
+  color: white;
+  background-color: #3884fe;
+  font-weight: 700;
+  cursor: pointer;
+}

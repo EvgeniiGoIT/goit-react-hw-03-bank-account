@@ -1,0 +1,22 @@
+.balance {
+  width: 400px;
+  display: flex;
+  justify-content: space-around;
+  padding: 40px 0;
+}
+
+.balance__text {
+  color: rgb(61, 59, 59);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.income {
+  composes: balance__text;
+  color: rgb(54, 184, 54);
+}
+
+.expenses {
+  composes: balance__text;
+  color: rgb(196, 28, 28);
+}
