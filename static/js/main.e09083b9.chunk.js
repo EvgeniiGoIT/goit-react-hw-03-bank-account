@@ -1,2 +1,0 @@
-(this["webpackJsonpgoit-react-hw-03-bank-account"]=this["webpackJsonpgoit-react-hw-03-bank-account"]||[]).push([[0],{3:function(t,n,e){t.exports=e(8)},8:function(t,n,e){"use strict";e.r(n);var c=e(0),a=e.n(c),o=e(2),r=function(){return a.a.createElement("div",null)};e.n(o).a.render(a.a.createElement(r,null),document.getElementById("root"))}},[[3,1,2]]]);
-//# sourceMappingURL=main.e09083b9.chunk.js.map
