@@ -1,20 +1,31 @@
-import React, { Component } from "react";
-import uuidv1 from "uuid/v1";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import TYPE from "../../Constant/TYPE";
-import MESSAGE from "../../Constant/MESSAGE";
-import styles from "./Dashboard.module.css";
-import Controls from "./../Controls/Controls";
-import Balance from "./../Balance/Balance";
-import TransactionHistory from "./../TransactionHistory/TransactionHistory";
+import React, { Component } from 'react';
+import uuidv1 from 'uuid/v1';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import TYPE from '../../Constant/TYPE';
+import MESSAGE from '../../Constant/MESSAGE';
+import styles from './Dashboard.module.css';
+import Controls from './../Controls/Controls';
+import Balance from './../Balance/Balance';
+import TransactionHistory from './../TransactionHistory/TransactionHistory';
 
 class Dashboard extends Component {
   state = {
     transactions: [],
-    balance: 0
+    balance: 0,
   };
+  componentDidMount() {
+    const persistedState = localStorage.getItem('state');
+    if (persistedState) {
+      this.setState(JSON.parse(persistedState));
+    }
+  }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      localStorage.setItem('state', JSON.stringify(this.state));
+    }
+  }
   handleTransaction = (value, type) => {
     this.checkTransaction(value, type);
   };
@@ -37,33 +48,30 @@ class Dashboard extends Component {
       balance:
         type === TYPE.deposit
           ? prevState.balance + value
-          : prevState.balance - value
+          : prevState.balance - value,
     }));
   };
   setTransaction = (amount, type) => ({
     id: uuidv1(),
     type,
     amount,
-    date: new Date().toLocaleString()
+    date: new Date().toLocaleString(),
   });
-  incomeExpenses = (transactions, type) => {
-    return transactions.length
-      ? transactions
-          .filter(transaction => transaction.type === TYPE[type])
-          .reduce((acc, transaction) => acc + transaction.amount, 0)
-      : 0;
-  };
+  incomeExpenses = transactions =>
+    transactions.reduce(
+      (acc, t) => {
+        return { ...acc, [t.type]: t.amount + acc[t.type] };
+      },
+      { deposit: 0, withdraw: 0 },
+    );
   render() {
     const { transactions, balance } = this.state;
-    const income = this.incomeExpenses(transactions, TYPE.deposit);
-    const expenses = this.incomeExpenses(transactions, TYPE.withdraw);
+    const { deposit, withdraw } = this.incomeExpenses(transactions);
     return (
       <>
         <div className={styles.dashboard}>
-          <Controls
-            onTransaction={this.handleTransaction}
-          />
-          <Balance balance={balance} income={income} expenses={expenses} />
+          <Controls onTransaction={this.handleTransaction} />
+          <Balance balance={balance} income={deposit} expenses={withdraw} />
           {transactions.length > 0 && (
             <TransactionHistory items={transactions} />
           )}
